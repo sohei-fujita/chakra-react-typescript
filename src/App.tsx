@@ -6,7 +6,7 @@ import { Button, ChakraProvider } from '@chakra-ui/react';
 function App() {
   return (
     <ChakraProvider>
-       <Button colorScheme='teal'>ボタン</Button>
+       <Button>ボタン</Button>
     </ChakraProvider>
   );
 }
