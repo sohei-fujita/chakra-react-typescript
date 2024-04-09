@@ -1,11 +1,20 @@
 import { Box, Flex, Heading, useDisclosure } from "@chakra-ui/react";
-import { FC, memo } from "react";
-import { Link } from "react-router-dom";
+import { FC, memo, useCallback } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { MenuIconButton } from "../../atoms/button/MenuIconButton";
 import { MenuDrawer } from "../../molecules/MenuDrawer";
+import { on } from "events";
 
 export const Header: FC = memo(() => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const navigate = useNavigate();
+
+  const onClickHome = useCallback(() => navigate("/home"), []);
+  const onClickUserManagement = useCallback(
+    () => navigate("home/user_management"),
+    []
+  );
+  const onClickSetting = useCallback(() => navigate("/home/setting"), []);
 
   return (
     <>
@@ -17,7 +26,13 @@ export const Header: FC = memo(() => {
         justify="space-between"
         padding={{ base: 3, md: 5 }}
       >
-        <Flex align="center" as="a" mr={8} _hover={{ cursor: "pointer" }}>
+        <Flex
+          align="center"
+          as="a"
+          mr={8}
+          _hover={{ cursor: "pointer" }}
+          onClick={onClickHome}
+        >
           <Heading as="h1" fontSize={{ base: "md", md: "lg" }}>
             ユーザー管理アプリ
           </Heading>
@@ -29,13 +44,23 @@ export const Header: FC = memo(() => {
           display={{ base: "none", md: "flex" }}
         >
           <Box pr={4}>
-            <Link to={"/about"}>ユーザー一覧</Link>
+            <Link to="/home/user_management" onClick={onClickUserManagement}>
+              ユーザー一覧
+            </Link>
           </Box>
-          <Link to={"/about"}>設定</Link>
+          <Link to="/home/setting" onClick={onClickSetting}>
+            設定
+          </Link>
         </Flex>
         <MenuIconButton onOpen={onOpen} />
       </Flex>
-      <MenuDrawer onClose={onClose} isOpen={isOpen} />
+      <MenuDrawer
+        onClose={onClose}
+        isOpen={isOpen}
+        onClickHome={onClickHome}
+        onClickUserManagement={onClickUserManagement}
+        onClickSetting={onClickSetting}
+      />
     </>
   );
 });
