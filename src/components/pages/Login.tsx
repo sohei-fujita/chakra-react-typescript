@@ -26,7 +26,7 @@ export const Login: FC = memo(() => {
             onChange={onChangeUserId}
           />
           <PrimaryButton
-            disabled={userId === ""}
+            isDisabled={userId === ""}
             loading={loading}
             onClick={onClickLogin}
           >
