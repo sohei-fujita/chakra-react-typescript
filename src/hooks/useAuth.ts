@@ -10,6 +10,8 @@ export const useAuth = () => {
 
   const login = useCallback(
     (id: string) => {
+      setLoading(true);
+
       axios
         .get<User>(`https://jsonplaceholder.typicode.com/users/${id}`)
         .then((res) => {
@@ -24,5 +26,5 @@ export const useAuth = () => {
     },
     [navigate]
   );
-  return { login };
+  return { login, loading };
 };
