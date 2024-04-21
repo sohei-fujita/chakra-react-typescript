@@ -1,36 +1,30 @@
-import { Box, Image, Stack, Text, Wrap, WrapItem } from "@chakra-ui/react";
-import { FC, memo } from "react";
+import { Center, Spinner, Wrap, WrapItem } from "@chakra-ui/react";
+import { FC, memo, useEffect } from "react";
+import { UserCard } from "../organisms/user/UserCard";
+import { useAllUsers } from "../../hooks/useAllUsers";
 
 export const UserManagement: FC = memo(() => {
+  const { getUsers, users, loading } = useAllUsers();
+
+  useEffect(() => getUsers(), []);
+
   return (
-    <Wrap p={{ base: 4, md: 10 }}>
-      <WrapItem>
-        <Box
-          w="260px"
-          h="260px"
-          bg="white"
-          borderRadius="10px"
-          shadow="md"
-          p={4}
-          _hover={{ cursor: "pointer", opacity: 0.8 }}
-        >
-          <Stack textAlign="center">
-            <Image
-              borderRadius="full"
-              boxSize="160px"
-              src="https://source.unsplash.com/random"
-              alt="プロフィール"
-              m="auto"
+    <>
+      {true ? (
+        <Center h="100vh">
+          <Spinner />
+        </Center>
+      ) : (
+        <Wrap p={{ base: 4, md: 10 }}>
+          <WrapItem>
+            <UserCard
+              imageUrl="https://source.unsplash.com/random"
+              userName="fuji"
+              fullName="sohei fujita"
             />
-            <Text fontSize="lg" fontWeight="bold">
-              ふじた
-            </Text>
-            <Text fontSize="sm" color="gray">
-              FUJITA
-            </Text>
-          </Stack>
-        </Box>
-      </WrapItem>
-    </Wrap>
+          </WrapItem>
+        </Wrap>
+      )}
+    </>
   );
 });
