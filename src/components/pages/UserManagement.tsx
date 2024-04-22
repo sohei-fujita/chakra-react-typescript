@@ -10,19 +10,21 @@ export const UserManagement: FC = memo(() => {
 
   return (
     <>
-      {true ? (
+      {loading ? (
         <Center h="100vh">
           <Spinner />
         </Center>
       ) : (
         <Wrap p={{ base: 4, md: 10 }}>
-          <WrapItem>
-            <UserCard
-              imageUrl="https://source.unsplash.com/random"
-              userName="fuji"
-              fullName="sohei fujita"
-            />
-          </WrapItem>
+          {users?.map((user) => (
+            <WrapItem key={user.id} mx="auto">
+              <UserCard
+                imageUrl="https://source.unsplash.com/random"
+                userName={user.username}
+                fullName={user.name}
+              />
+            </WrapItem>
+          ))}
         </Wrap>
       )}
     </>
